@@ -55,7 +55,7 @@ $availability  = $property['ufCrm18Availability']  ?? "Unknown";
 $geopoints     = $property['ufCrm18Geopoints']     ?? null;
 
 // Company info
-$companyLogoPath = __DIR__ . "/assets/images/company-logo.webp";
+$companyLogoPath = __DIR__ . "/assets/images/company-logo.png";
 $companyName    = "X10 Real Estate";
 $companyAddress = "Office 402, Detroit House, Motor City, PO Box 567001, Dubai, UAE";
 $companyWebsite = "https://xtenrealestate.com/";

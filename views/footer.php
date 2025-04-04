@@ -479,6 +479,7 @@
                 canvas.width = width;
                 canvas.height = height;
 
+                // Draw the original image
                 ctx.drawImage(imageElement, 0, 0, width, height);
 
                 const watermarkAspect = watermarkImage.width / watermarkImage.height;
@@ -487,17 +488,23 @@
                 let watermarkWidth, watermarkHeight;
 
                 if (watermarkAspect > imageAspect) {
-                    watermarkWidth = width * 0.6;
+                    watermarkWidth = width * 0.4;
                     watermarkHeight = watermarkWidth / watermarkAspect;
                 } else {
-                    watermarkHeight = height * 0.6;
+                    watermarkHeight = height * 0.4;
                     watermarkWidth = watermarkHeight * watermarkAspect;
                 }
 
                 const xPosition = (width - watermarkWidth) / 2;
                 const yPosition = (height - watermarkHeight) / 2;
 
+                // Set opacity for the watermark
+                ctx.globalAlpha = 0.4; // Opacity value between 0.0 (transparent) and 1.0 (opaque)
                 ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
+
+                // Reset alpha for any further drawings (if needed)
+                ctx.globalAlpha = 1.0;
+
                 const watermarkedImage = canvas.toDataURL('image/jpeg', 0.8);
                 resolve(watermarkedImage);
             };
@@ -507,6 +514,7 @@
             };
         });
     }
+
 
     // Function to add watermark text to the image
     function addWatermarkText(imageElement, watermarkText) {
