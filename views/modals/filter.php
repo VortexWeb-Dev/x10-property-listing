@@ -308,9 +308,15 @@
                 for (let i = 0; i < Math.ceil(totalOwners / 50); i++) {
                     const paginatedResponse = await fetch(`${baseUrl}/user.get?select[0]=NAME&select[1]=LAST_NAME&order[NAME]=asc&filter[ACTIVE]=true&start=${i * 50}`);
                     const paginatedData = await paginatedResponse.json();
-                    owners.push(...paginatedData.result.map(owner => ({
-                        NAME: `${owner.NAME} ${owner.LAST_NAME}`.trim()
-                    })));
+                    owners.push(...paginatedData.result.map(owner => {
+                        const hasName = owner.NAME || owner.LAST_NAME;
+                        const name = hasName ?
+                            `${owner.NAME || ''} ${owner.LAST_NAME || ''}`.trim() :
+                            `Unknown - (${owner.EMAIL || 'No Email'})`;
+                        return {
+                            NAME: name
+                        };
+                    }));
                 }
 
 

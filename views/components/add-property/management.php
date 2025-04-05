@@ -105,8 +105,10 @@
                     const ownersData = await ownersResponse.json();
                     owners = owners.concat(ownersData.result.map(owner => {
                         return {
-                            NAME: (owner.NAME + ' ' + owner.LAST_NAME).trim()
-                        }
+                            NAME: (owner.NAME || owner.LAST_NAME) ?
+                                `${owner.NAME || ''} ${owner.LAST_NAME || ''}`.trim() :
+                                `Unknown - (${owner.EMAIL || 'No Email'})`
+                        };
                     }));
                 }
 
