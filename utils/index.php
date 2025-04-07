@@ -120,6 +120,8 @@ function getPropertyPurpose($property)
 
 function getPropertyType($property)
 {
+    $offeringType = $property['ufCrm18OfferingType'];
+
     $property_types = array(
         "AP" => "Apartment",
         "BW" => "Bungalow",
@@ -127,11 +129,10 @@ function getPropertyType($property)
         "DX" => "Duplex",
         "FF" => "Full floor",
         "HF" => "Half floor",
-        // "LP" => "Land / Plot",
         "PH" => "Penthouse",
         "TH" => "Townhouse",
         "VH" => "Villa",
-        "WB" => "Whole Building",
+        "WB" => "Building",
         "HA" => "Hotel Apartment",
         "LC" => "Labor camp",
         "BU" => "Bulk units",
@@ -139,13 +140,28 @@ function getPropertyType($property)
         "FA" => "Factory",
         "OF" => "Office",
         "RE" => "Retail",
-        "LP" => "Residential Plot",
+        "LP" => "Plot",
         "SH" => "Shop",
         "SR" => "Show Room",
         "SA" => "Staff Accommodation"
     );
 
-    return $property_types[$property['ufCrm18PropertyType']] ?? '';
+    $typeCode = $property['ufCrm18PropertyType'] ?? '';
+    $baseType = $property_types[$typeCode] ?? '';
+
+    if (in_array($offeringType, ['CR', 'CS'])) {
+        if (in_array($typeCode, ['LP', 'WB', 'VH'])) {
+            return 'Commercial ' . $baseType;
+        }
+    } else {
+        if ($typeCode === 'WB') {
+            return 'Whole ' . $baseType;
+        } elseif ($typeCode === 'LP') {
+            return 'Residential ' . $baseType;
+        }
+    }
+
+    return $baseType;
 }
 
 function getPropertyTypeFromId($typeId)
