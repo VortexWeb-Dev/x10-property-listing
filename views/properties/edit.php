@@ -132,7 +132,7 @@
             "ufCrm18ServiceCharge": data.service_charge,
             "ufCrm18FinancialStatus": data.financial_status,
             "ufCrm18VideoTourUrl": data.video_tour_url,
-            "ufCrm_12_360_VIEW_URL": data["360_view_url"],
+            "ufCrm_18_360_VIEW_URL": data["360_view_url"],
             "ufCrm18QrCodePropertyBooster": data.qr_code_url,
 
             "ufCrm18Location": data.pf_location,

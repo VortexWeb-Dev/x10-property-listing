@@ -62,7 +62,7 @@ $response = CRest::call('crm.item.list', [
         "ufCrm18FloorPlan",
         "ufCrm18QrCodePropertyBooster",
         "ufCrm18VideoTourUrl",
-        "ufCrm_12_360_VIEW_URL",
+        "ufCrm_18_360_VIEW_URL",
         "ufCrm18BrochureDescription",
         "ufCrm_12_BROCHURE_DESCRIPTION_2",
         "ufCrm18PhotoLinks",
