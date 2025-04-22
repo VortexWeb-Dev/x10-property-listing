@@ -500,7 +500,7 @@
 
                 // Set opacity for the watermark
                 // ctx.globalAlpha = 0.4; // Opacity value between 0.0 (transparent) and 1.0 (opaque)
-                ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
+                // ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
 
                 // Reset alpha for any further drawings (if needed)
                 ctx.globalAlpha = 1.0;
