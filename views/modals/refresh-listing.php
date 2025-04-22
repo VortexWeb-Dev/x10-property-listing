@@ -25,11 +25,18 @@
         var button = event.relatedTarget;
         var propertyId = button.getAttribute('data-property-id');
         var reference = button.getAttribute('data-reference');
+        var status = button.getAttribute('data-status');
 
         var propertyIdInput = document.getElementById('propertyId');
         var newReferenceInput = document.getElementById('newReference');
 
         propertyIdInput.value = propertyId;
         newReferenceInput.value = reference;
+
+        if(status === 'PUBLISHED') {
+            newReferenceInput.disabled = true;
+        } else {
+            newReferenceInput.disabled = true;
+        }
     });
 </script>

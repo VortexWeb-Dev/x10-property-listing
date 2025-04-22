@@ -1259,6 +1259,9 @@
 
             // Management
             document.getElementById('reference').value = property.ufCrm18ReferenceNumber;
+            if(property.ufCrm18Status === 'PUBLISHED') {
+                document.getElementById('reference').disabled = true;
+            }
 
             // Landlord 1
             document.getElementById('landlord_name').value = property.ufCrm18LandlordName;
