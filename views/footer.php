@@ -499,13 +499,13 @@
                 const yPosition = (height - watermarkHeight) / 2;
 
                 // Set opacity for the watermark
-                ctx.globalAlpha = 0.4; // Opacity value between 0.0 (transparent) and 1.0 (opaque)
+                // ctx.globalAlpha = 0.4; // Opacity value between 0.0 (transparent) and 1.0 (opaque)
                 ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
 
                 // Reset alpha for any further drawings (if needed)
                 ctx.globalAlpha = 1.0;
 
-                const watermarkedImage = canvas.toDataURL('image/jpeg', 0.8);
+                const watermarkedImage = canvas.toDataURL('image/jpeg', 1);
                 resolve(watermarkedImage);
             };
 
