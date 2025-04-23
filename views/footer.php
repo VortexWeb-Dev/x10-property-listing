@@ -471,17 +471,25 @@
             watermarkImage.src = watermarkImagePath;
 
             watermarkImage.onload = function() {
+                // Resize image to 80% of original size (for example)
+                const originalWidth = imageElement.width;
+                const originalHeight = imageElement.height;
+                const scaleFactor = 0.8;
+
+                const width = originalWidth * scaleFactor;
+                const height = originalHeight * scaleFactor;
+
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const width = imageElement.width;
-                const height = imageElement.height;
 
                 canvas.width = width;
                 canvas.height = height;
 
-                // Draw the original image
+                // Draw the resized original image
                 ctx.drawImage(imageElement, 0, 0, width, height);
 
+                // Skip watermark for now
+                /*
                 const watermarkAspect = watermarkImage.width / watermarkImage.height;
                 const imageAspect = width / height;
 
@@ -498,15 +506,13 @@
                 const xPosition = (width - watermarkWidth) / 2;
                 const yPosition = (height - watermarkHeight) / 2;
 
-                // Set opacity for the watermark
-                // ctx.globalAlpha = 0.4; // Opacity value between 0.0 (transparent) and 1.0 (opaque)
-                // ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
-
-                // Reset alpha for any further drawings (if needed)
+                ctx.globalAlpha = 0.4;
+                ctx.drawImage(watermarkImage, xPosition, yPosition, watermarkWidth, watermarkHeight);
                 ctx.globalAlpha = 1.0;
+                */
 
-                const watermarkedImage = canvas.toDataURL('image/jpeg', 1);
-                resolve(watermarkedImage);
+                const resizedImage = canvas.toDataURL('image/jpeg', 1);
+                resolve(resizedImage);
             };
 
             watermarkImage.onerror = function() {
@@ -514,7 +520,6 @@
             };
         });
     }
-
 
     // Function to add watermark text to the image
     function addWatermarkText(imageElement, watermarkText) {
