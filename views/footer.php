@@ -1259,7 +1259,7 @@
 
             // Management
             document.getElementById('reference').value = property.ufCrm18ReferenceNumber;
-            if(property.ufCrm18Status === 'PUBLISHED') {
+            if (property.ufCrm18Status === 'PUBLISHED') {
                 document.getElementById('reference').disabled = true;
             }
 
@@ -1408,6 +1408,42 @@
                     document.getElementById('pocket').checked = true;
                     break;
             }
+
+            // Make permit required or not required based on status
+            const statusRadios = document.querySelectorAll('input[name="status"]');
+            const reraPermit = document.getElementById('rera_permit_number');
+            const reraLabel = document.querySelector('label[for="rera_permit_number"]');
+
+            let requiredMarker = null;
+
+            function updateRequiredFields() {
+                const selected = document.querySelector('input[name="status"]:checked');
+                if (selected && selected.value === 'PUBLISHED') {
+                    reraPermit.setAttribute('required', 'required');
+
+                    if (!requiredMarker) {
+                        requiredMarker = document.createElement('span');
+                        requiredMarker.textContent = ' *';
+                        requiredMarker.classList.add('text-red-500');
+                        reraLabel.appendChild(requiredMarker);
+                    }
+                } else {
+                    reraPermit.removeAttribute('required');
+
+                    if (requiredMarker) {
+                        requiredMarker.remove();
+                        requiredMarker = null;
+                    }
+                }
+            }
+
+            // Initial check on page load
+            updateRequiredFields();
+
+            // Attach change event to all status radio buttons
+            statusRadios.forEach(radio => {
+                radio.addEventListener('change', updateRequiredFields);
+            });
 
             function ensureOptionExistsAndSelect(selectElementId, value, label) {
                 const selectElement = document.getElementById(selectElementId);
