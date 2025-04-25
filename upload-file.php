@@ -87,7 +87,7 @@ try {
     }
 
     $uniqueName = uniqid() . '_' . time() . '.' . $extension;
-    $key = 'property-listing-uploads/' . $uniqueName;
+    $key = $_ENV['AWS_S3_FOLDER'] . '/' . $uniqueName;
 
     // Verify file exists and is readable
     if (!is_readable($file['tmp_name'])) {
