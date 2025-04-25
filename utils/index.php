@@ -744,7 +744,9 @@ function generateBayutXml($properties)
             $xml .= '<plotArea><![CDATA[' . $property['ufCrm18TotalPlotSize'] . ']]></plotArea>';
         }
 
-        $xml .= '<Bedrooms><![CDATA[' . (($property['ufCrm18Bedroom'] === 0) ? -1 : ($property['ufCrm18Bedroom'] > 10 ? "10+" : $property['ufCrm18Bedroom'])) . ']]></Bedrooms>';
+        if ($property['ufCrm18OfferingType'] === 'RR' || $property['ufCrm18OfferingType'] === 'RS') {
+            $xml .= '<Bedrooms><![CDATA[' . (($property['ufCrm18Bedroom'] === 0) ? -1 : ($property['ufCrm18Bedroom'] > 10 ? "10+" : $property['ufCrm18Bedroom'])) . ']]></Bedrooms>';
+        }
         $xml .= '<Bathrooms><![CDATA[' . ($property['ufCrm18Bathroom'] ?? '') . ']]></Bathrooms>';
 
         $is_offplan = ($property['ufCrm18ProjectStatus'] === 'off_plan_primary' || $property['ufCrm18ProjectStatus'] === 'offplan_secondary') ? 'Yes' : 'No';
