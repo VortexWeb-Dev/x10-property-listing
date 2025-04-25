@@ -76,12 +76,6 @@ $response = CRest::call('crm.item.list', [
         "ufCrm18DubizzleEnable",
         "ufCrm18WebsiteEnable",
         "ufCrm18TitleDeed",
-        "ufCrm_12_LANDLORD_NAME_2",
-        "ufCrm_12_LANDLORD_EMAIL_2",
-        "ufCrm_12_LANDLORD_CONTACT_2",
-        "ufCrm_12_LANDLORD_NAME_3",
-        "ufCrm_12_LANDLORD_EMAIL_3",
-        "ufCrm_12_LANDLORD_CONTACT_3"
         // "ufCrm18City",
         // "ufCrm18Community",
         // "ufCrm18SubCommunity",
