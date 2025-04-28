@@ -259,7 +259,10 @@
         }
         localStorage.setItem('filters', JSON.stringify(filterParams));
 
-        fetchProperties(currentPage, filterParams);
+        fetchProperties(currentPage, isAdmin ? filterParams : {
+            ...filterParams,
+            "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+        });
         document.getElementById('filterForm').reset();
         document.querySelector('button[data-bs-dismiss="modal"]').click();
 

@@ -59,7 +59,39 @@
     const pageSize = 50;
     let totalPages = 0;
 
+    (async () => {
+        const isAdmin = localStorage.getItem('isAdmin') == 'true';
+        const pfXmlId = await getPlXmlId(localStorage.getItem('userId'));
+
+        console.log('pfXmlId', pfXmlId);
+        localStorage.setItem('pfXmlId', pfXmlId);
+    })();
+
     const isAdmin = localStorage.getItem('isAdmin') == 'true';
+    const pfXmlId = localStorage.getItem('pfXmlId');
+
+    async function getPlXmlId(userId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/user.get?ID=${userId}&select[0]=UF_USR_1745847119672`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            return data.result[0]?.UF_USR_1745847119672 ?? null;
+        } catch (error) {
+            console.error('Error fetching properties:', error);
+            return null;
+        }
+    }
+
+
 
     async function fetchProperties(page = 1, filters = null) {
         const baseUrl = API_BASE_URL;
@@ -292,7 +324,10 @@
             currentPage++;
         }
         const filters = JSON.parse(localStorage.getItem('filters'));
-        fetchProperties(currentPage, filters || null);
+        fetchProperties(currentPage, isAdmin ? filters : {
+            ...filters,
+            "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+        });
     }
 
     function toggleCheckboxes(source) {
@@ -333,5 +368,7 @@
         }
     }
 
-    fetchProperties(currentPage);
+    fetchProperties(currentPage, isAdmin ? null : {
+        "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+    });
 </script>

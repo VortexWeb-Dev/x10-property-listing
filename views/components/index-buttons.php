@@ -170,7 +170,9 @@
     });
 
     if (filterKey === 'ALL') {
-      fetchProperties(currentPage);
+      fetchProperties(currentPage, isAdmin ? null : {
+        "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+      });
       return;
     }
 
@@ -190,7 +192,10 @@
     }
 
     localStorage.setItem('filters', JSON.stringify(filterParams));
-    fetchProperties(currentPage, filterParams);
+    fetchProperties(currentPage, isAdmin ? filterParams : {
+      ...filterParams,
+      "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+    });
 
     document.querySelector('#clearFiltersBtn').classList.remove('d-none');
   }
