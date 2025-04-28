@@ -80,6 +80,8 @@
                 .join('&');
 
             if (filters) {
+                localStorage.setItem('filters', JSON.stringify(filters));
+
                 const filterParams = Object.entries(filters)
                     .map(([key, value]) => `filter[${key}]=${value}`)
                     .join('&');
@@ -289,7 +291,8 @@
         } else if (direction === 'next' && currentPage < totalPages) {
             currentPage++;
         }
-        fetchProperties(currentPage);
+        const filters = JSON.parse(localStorage.getItem('filters'));
+        fetchProperties(currentPage, filters || null);
     }
 
     function toggleCheckboxes(source) {

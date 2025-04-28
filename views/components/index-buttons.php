@@ -45,7 +45,22 @@
         <i class="fas fa-filter me-2"></i>Filters
       </button>
 
-      <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none"><i class="fas fa-eraser me-2"></i> Clear Filters</a>
+      <a href="?page=properties" id="clearFiltersBtn" class="btn btn-secondary py-1.5 px-4 rounded-md d-none">
+        <i class="fas fa-eraser me-2"></i> Clear Filters
+      </a>
+
+      <script>
+        document.getElementById('clearFiltersBtn').addEventListener('click', function(e) {
+          // Prevent the default anchor behavior
+          e.preventDefault();
+
+          // Remove specific filters from localStorage
+          localStorage.removeItem('filters');
+
+          // Then redirect manually
+          window.location.href = this.href;
+        });
+      </script>
 
     </div>
   </div>
@@ -159,9 +174,23 @@
       return;
     }
 
-    fetchProperties(currentPage, {
+    const filterParams = {
       'ufCrm18Status': filterKey
-    });
+    };
+    const existingFilters = JSON.parse(localStorage.getItem('filters')) || {};
+
+    if (Object.keys(existingFilters).length > 0) {
+      for (const [key, value] of Object.entries(existingFilters)) {
+        if (key in filterParams) {
+          filterParams[key] = filterParams[key] + ',' + value;
+        } else {
+          filterParams[key] = value;
+        }
+      }
+    }
+
+    localStorage.setItem('filters', JSON.stringify(filterParams));
+    fetchProperties(currentPage, filterParams);
 
     document.querySelector('#clearFiltersBtn').classList.remove('d-none');
   }

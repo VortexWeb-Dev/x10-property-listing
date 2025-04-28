@@ -246,6 +246,19 @@
         // console.log("Params", params);
         // console.log("filterParams", filterParams);
 
+        const existingFilters = JSON.parse(localStorage.getItem('filters')) || {};
+
+        if (Object.keys(existingFilters).length > 0) {
+            for (const [key, value] of Object.entries(existingFilters)) {
+                if (key in filterParams) {
+                    filterParams[key] = filterParams[key] + ',' + value;
+                } else {
+                    filterParams[key] = value;
+                }
+            }
+        }
+        localStorage.setItem('filters', JSON.stringify(filterParams));
+
         fetchProperties(currentPage, filterParams);
         document.getElementById('filterForm').reset();
         document.querySelector('button[data-bs-dismiss="modal"]').click();
