@@ -6,6 +6,26 @@ require_once(__DIR__ . '/crest/crestcurrent.php');
 ?>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtersStr = localStorage.getItem('filters');
+        if (filtersStr) {
+            try {
+                const filters = JSON.parse(filtersStr);
+
+                const keys = Object.keys(filters);
+                const onlyAgentId = keys.length === 1 && keys[0] === 'ufCrm18AgentId';
+
+                if (!onlyAgentId) {
+                    document.querySelector('#clearFiltersBtn').classList.remove('d-none');
+                }
+
+            } catch (e) {
+                // If JSON parsing fails, show the clear button just in case
+                document.querySelector('#clearFiltersBtn').classList.remove('d-none');
+            }
+        }
+    });
+
     let DEVELOPERS_ENTITY_ID = <?php echo json_encode(DEVELOPERS_ENTITY_TYPE_ID); ?>;
     let AGENTS_ENTITY_ID = <?php echo json_encode(AGENTS_ENTITY_TYPE_ID); ?>;
     let PF_LOCATIONS_ENTITY_ID = <?php echo json_encode(PF_LOCATIONS_ENTITY_TYPE_ID); ?>;
