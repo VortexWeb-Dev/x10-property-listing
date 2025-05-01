@@ -55,7 +55,7 @@
           // Prevent the default anchor behavior
           e.preventDefault();
 
-          // Remove specific filters from localStorage
+          // Remove specific filters from sessionStorage
           sessionStorage.removeItem('filters');
 
           // Then redirect manually
@@ -139,7 +139,7 @@
 </div>
 
 <script>
-  const savedFilter = localStorage.getItem('listingFilter') || 'ALL';
+  const savedFilter = sessionStorage.getItem('listingFilter') || 'ALL';
   document.querySelectorAll('.dropdown-item').forEach(item => {
     if (item.innerText === document.querySelector('.btn').innerText) {
       item.classList.add('active');
@@ -147,7 +147,7 @@
   });
 
   function filterProperties(filterKey) {
-    localStorage.setItem('listingFilter', filterKey);
+    sessionStorage.setItem('listingFilter', filterKey);
 
     const filterLabels = {
       'ALL': 'All Listings',
@@ -173,7 +173,7 @@
 
     if (filterKey === 'ALL') {
       fetchProperties(currentPage, isAdmin ? null : {
-        "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+        "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
       });
       return;
     }
@@ -196,7 +196,7 @@
     sessionStorage.setItem('filters', JSON.stringify(filterParams));
     fetchProperties(currentPage, isAdmin ? filterParams : {
       ...filterParams,
-      "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+      "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
     });
 
     document.querySelector('#clearFiltersBtn').classList.remove('d-none');

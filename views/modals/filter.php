@@ -261,7 +261,7 @@
 
         fetchProperties(currentPage, isAdmin ? filterParams : {
             ...filterParams,
-            "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
         });
         document.getElementById('filterForm').reset();
         document.querySelector('button[data-bs-dismiss="modal"]').click();

@@ -60,15 +60,15 @@
     let totalPages = 0;
 
     (async () => {
-        const isAdmin = localStorage.getItem('isAdmin') == 'true';
-        const pfXmlId = await getPlXmlId(localStorage.getItem('userId'));
+        const isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+        const pfXmlId = await getPlXmlId(sessionStorage.getItem('userId'));
 
         console.log('pfXmlId', pfXmlId);
-        localStorage.setItem('pfXmlId', pfXmlId);
+        sessionStorage.setItem('pfXmlId', pfXmlId);
     })();
 
-    const isAdmin = localStorage.getItem('isAdmin') == 'true';
-    const pfXmlId = localStorage.getItem('pfXmlId');
+    const isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+    const pfXmlId = sessionStorage.getItem('pfXmlId');
 
     async function getPlXmlId(userId) {
         try {
@@ -326,7 +326,7 @@
         const filters = JSON.parse(sessionStorage.getItem('filters'));
         fetchProperties(currentPage, isAdmin ? filters : {
             ...filters,
-            "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
         });
     }
 
@@ -369,6 +369,6 @@
     }
 
     fetchProperties(currentPage, isAdmin ? null : {
-        "ufCrm18AgentId": localStorage.getItem('pfXmlId')
+        "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
     });
 </script>
