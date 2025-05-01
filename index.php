@@ -7,7 +7,7 @@ require_once(__DIR__ . '/crest/crestcurrent.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const filtersStr = localStorage.getItem('filters');
+        const filtersStr = sessionStorage.getItem('filters');
         if (filtersStr) {
             try {
                 const filters = JSON.parse(filtersStr);

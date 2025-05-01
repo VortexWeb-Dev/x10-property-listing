@@ -56,7 +56,7 @@
           e.preventDefault();
 
           // Remove specific filters from localStorage
-          localStorage.removeItem('filters');
+          sessionStorage.removeItem('filters');
 
           // Then redirect manually
           window.location.href = this.href;
@@ -181,7 +181,7 @@
     const filterParams = {
       'ufCrm18Status': filterKey
     };
-    const existingFilters = JSON.parse(localStorage.getItem('filters')) || {};
+    const existingFilters = JSON.parse(sessionStorage.getItem('filters')) || {};
 
     if (Object.keys(existingFilters).length > 0) {
       for (const [key, value] of Object.entries(existingFilters)) {
@@ -193,7 +193,7 @@
       }
     }
 
-    localStorage.setItem('filters', JSON.stringify(filterParams));
+    sessionStorage.setItem('filters', JSON.stringify(filterParams));
     fetchProperties(currentPage, isAdmin ? filterParams : {
       ...filterParams,
       "ufCrm18AgentId": localStorage.getItem('pfXmlId')

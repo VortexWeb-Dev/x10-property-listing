@@ -112,7 +112,7 @@
                 .join('&');
 
             if (filters) {
-                localStorage.setItem('filters', JSON.stringify(filters));
+                sessionStorage.setItem('filters', JSON.stringify(filters));
 
                 const filterParams = Object.entries(filters)
                     .map(([key, value]) => `filter[${key}]=${value}`)
@@ -323,7 +323,7 @@
         } else if (direction === 'next' && currentPage < totalPages) {
             currentPage++;
         }
-        const filters = JSON.parse(localStorage.getItem('filters'));
+        const filters = JSON.parse(sessionStorage.getItem('filters'));
         fetchProperties(currentPage, isAdmin ? filters : {
             ...filters,
             "ufCrm18AgentId": localStorage.getItem('pfXmlId')
