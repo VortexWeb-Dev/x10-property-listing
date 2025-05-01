@@ -868,6 +868,7 @@ function isAdmin($userId)
         4, // Vortexweb  
         14, // Abir Alsadek
         16, // Raza Malik
+        22, // Mary Grace Esguerra
     ];
 
     return in_array($userId, $admins);
