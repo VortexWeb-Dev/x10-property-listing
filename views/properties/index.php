@@ -368,7 +368,11 @@
         }
     }
 
-    fetchProperties(currentPage, isAdmin ? null : {
-        "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
-    });
+    if (isAdmin) {
+        fetchProperties(currentPage);
+    } else {
+        fetchProperties(currentPage, {
+            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
+        });
+    }
 </script>
