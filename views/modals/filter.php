@@ -259,10 +259,15 @@
         }
         sessionStorage.setItem('filters', JSON.stringify(filterParams));
 
-        fetchProperties(currentPage, isAdmin ? filterParams : {
-            ...filterParams,
-            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
-        });
+        if (isAdmin) {
+            fetchProperties(currentPage, filterParams);
+        } else {
+            fetchProperties(currentPage, {
+                ...filterParams,
+                "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
+            });
+        }
+
         document.getElementById('filterForm').reset();
         document.querySelector('button[data-bs-dismiss="modal"]').click();
 
