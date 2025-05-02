@@ -59,16 +59,7 @@
     const pageSize = 50;
     let totalPages = 0;
 
-    (async () => {
-        const isAdmin = sessionStorage.getItem('isAdmin') == 'true';
-        const pfXmlId = await getPlXmlId(sessionStorage.getItem('userId'));
-
-        console.log('pfXmlId', pfXmlId);
-        sessionStorage.setItem('pfXmlId', pfXmlId);
-    })();
-
-    const isAdmin = sessionStorage.getItem('isAdmin') == 'true';
-    const pfXmlId = sessionStorage.getItem('pfXmlId');
+    const isAdmin = localStorage.getItem('isAdmin') == 'true';
 
     async function getPlXmlId(userId) {
         try {
@@ -365,11 +356,5 @@
         }
     }
 
-    // if (isAdmin) {
     fetchProperties(currentPage);
-    // } else {
-    //     fetchProperties(currentPage, {
-    //         "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
-    //     });
-    // }
 </script>
