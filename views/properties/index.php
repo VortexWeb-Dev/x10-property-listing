@@ -324,10 +324,7 @@
             currentPage++;
         }
         const filters = JSON.parse(sessionStorage.getItem('filters'));
-        fetchProperties(currentPage, isAdmin ? filters : {
-            ...filters,
-            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
-        });
+        fetchProperties(currentPage, filters);
     }
 
     function toggleCheckboxes(source) {
@@ -368,11 +365,11 @@
         }
     }
 
-    if (isAdmin) {
-        fetchProperties(currentPage);
-    } else {
-        fetchProperties(currentPage, {
-            "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
-        });
-    }
+    // if (isAdmin) {
+    fetchProperties(currentPage);
+    // } else {
+    //     fetchProperties(currentPage, {
+    //         "ufCrm18AgentId": sessionStorage.getItem('pfXmlId')
+    //     });
+    // }
 </script>
