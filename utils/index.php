@@ -869,6 +869,7 @@ function isAdmin($userId)
         14, // Abir Alsadek
         16, // Raza Malik
         22, // Mary Grace Esguerra
+        24, // Yves Wayne Laxamana
     ];
 
     return in_array($userId, $admins);
