@@ -15,6 +15,7 @@
                         <select id="listing_owner" name="listing_owner" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" required>
                             <option value="">Please select</option>
                             <?php
+                            define('C_REST_WEB_HOOK_URL', 'https://x10realestate.bitrix24.com/rest/4/0b7ak4bs52boy325/');
                             $listing_owners = [];
                             $owner_result = CRest::call('user.get', ['order' => ['NAME' => 'ASC'], 'filter' => ['ACTIVE' => 'Y']]);
 
@@ -30,8 +31,11 @@
                                 echo '<option disabled>No owners found</option>';
                             } else {
                                 foreach ($listing_owners as $owner) {
+                                    $id = $owner['ID'];
                                     $name = trim($owner['NAME'] . ' ' . $owner['LAST_NAME']);
-                                    echo '<option value="' . $name . '">' . $name . '</option>';
+                                    $value = "$id-$name";
+
+                                    echo '<option value="' . $value . '">' . $name . '</option>';
                                 }
                             }
                             ?>
@@ -76,17 +80,22 @@
         e.preventDefault();
 
         const formData = new FormData(e.target);
+        const selectedOwner = formData.get('listing_owner');
+        const [id, name] = selectedOwner.split('-', 2);
 
         const fields = {
-            "ufCrm18ListingOwner": formData.get('listing_owner'),
+            "ufCrm18ListingOwnerId": id,
+            "ufCrm18ListingOwner": name,
         };
 
-        const propertyIds = formData.get('transferOwnerPropertyIds').split(',');
+        const propertyIds = formData.get('transferOwnerPropertyIds').split(',') || JSON.parse(localStorage.getItem('transferOwnerPropertyIds')) || [];
 
         for (const id of propertyIds) {
             await updateItem(LISTINGS_ENTITY_TYPE_ID, fields, Number(id));
         }
 
-        window.location.href = '?page=properties';
+        localStorage.removeItem('transferOwnerPropertyIds');
+
+        window.location.replace('?page=properties');
     }
 </script>

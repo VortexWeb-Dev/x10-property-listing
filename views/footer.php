@@ -1515,13 +1515,21 @@
     // Function to select and add properties to agent transfer form
     function selectAndAddPropertiesToAgentTransfer() {
         var checkboxes = document.querySelectorAll('input[name="property_ids[]"]:checked');
+        if (checkboxes.length == 0) {
+            return alert('Please select at least one property or try refreshing the page.');
+        }
         var propertyIds = Array.from(checkboxes).map(checkbox => checkbox.value);
 
         if (!isPropertySelected()) {
             return alert('Please select at least one property.');
         }
 
-        document.getElementById('transferAgentPropertyIds').value = propertyIds.join(',');
+        if (document.getElementById('transferAgentPropertyIds')) {
+            document.getElementById('transferAgentPropertyIds').value = propertyIds.join(',');
+        } else {
+            localStorage.removeItem('transferAgentPropertyIds');
+            localStorage.setItem('transferAgentPropertyIds', propertyIds.join(','));
+        }
 
         const agentModal = new bootstrap.Modal(document.getElementById('transferAgentModal'));
         agentModal.show();
@@ -1536,7 +1544,12 @@
             return alert('Please select at least one property.');
         }
 
-        document.getElementById('transferOwnerPropertyIds').value = propertyIds.join(',');
+        if (document.getElementById('transferOwnerPropertyIds')) {
+            document.getElementById('transferOwnerPropertyIds').value = propertyIds.join(',');
+        } else {
+            localStorage.removeItem('transferOwnerPropertyIds');
+            localStorage.setItem('transferOwnerPropertyIds', propertyIds.join(','));
+        }
 
 
         const ownerModal = new bootstrap.Modal(document.getElementById('transferOwnerModal'));
