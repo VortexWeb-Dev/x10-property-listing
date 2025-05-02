@@ -17,13 +17,13 @@
                             <?php
                             define('C_REST_WEB_HOOK_URL', 'https://x10realestate.bitrix24.com/rest/4/0b7ak4bs52boy325/');
                             $listing_owners = [];
-                            $owner_result = CRest::call('user.get', ['order' => ['NAME' => 'ASC'], 'filter' => ['ACTIVE' => 'Y']]);
+                            $owner_result = CRest::call('user.get', ['order' => ['NAME' => 'ASC']]);
 
                             $total_owners = $owner_result['total'];
                             $listing_owners = $owner_result['result'];
 
                             for ($i = 1; $i < ceil($total_owners / 50); $i++) {
-                                $owner_response = CRest::call('user.get', ['order' => ['NAME' => 'ASC'], 'filter' => ['ACTIVE' => 'Y'], 'start' => $i * 50])['result'];
+                                $owner_response = CRest::call('user.get', ['order' => ['NAME' => 'ASC'], 'start' => $i * 50])['result'];
                                 $listing_owners = array_merge($listing_owners, $owner_response);
                             }
 
