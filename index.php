@@ -79,7 +79,7 @@ if (!array_key_exists($page, $pages)) {
         const isAdminKey = 'isAdmin';
         const userIdKey = 'userId';
         const expiryKey = 'isAdminExpiry';
-        const expiryTime = 10 * 60 * 1000; // 30 minutes in milliseconds
+        const expiryTime = 30 * 60 * 1000; // 30 minutes in milliseconds
         const now = Date.now();
 
         // Current values from server (these would be populated by PHP in your actual implementation)
@@ -91,7 +91,7 @@ if (!array_key_exists($page, $pages)) {
         const storedUserId = localStorage.getItem(userIdKey);
 
         // Check if admin status has expired or if the user ID has changed
-        if (!storedExpiry || now > parseInt(storedExpiry, 10) || storedUserId !== currentUserId && currentUserId) {
+        if (!storedExpiry || now > parseInt(storedExpiry, 30) || storedUserId !== currentUserId && currentUserId) {
             // Update all values
             localStorage.setItem(isAdminKey, currentIsAdmin);
             localStorage.setItem(userIdKey, currentUserId);
