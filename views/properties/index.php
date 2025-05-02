@@ -58,6 +58,7 @@
     let totalPages = 0;
 
     const isAdmin = localStorage.getItem('isAdmin') == 'true';
+    const userId = localStorage.getItem('userId');
 
     async function getPlXmlId(userId) {
         try {
@@ -86,7 +87,7 @@
         const baseUrl = API_BASE_URL;
         const entityTypeId = LISTINGS_ENTITY_TYPE_ID;
         const fields = [
-            'id', 'ufCrm18ReferenceNumber', 'ufCrm18OfferingType', 'ufCrm18PropertyType', 'ufCrm18Price', 'ufCrm18TitleEn', 'ufCrm18DescriptionEn', 'ufCrm18Size', 'ufCrm18Bedroom', 'ufCrm18Bathroom', 'ufCrm18PhotoLinks', 'ufCrm18AgentName', 'ufCrm18City', 'ufCrm18Community', 'ufCrm18SubCommunity', 'ufCrm18Tower', 'ufCrm18BayutCity', 'ufCrm18BayutCommunity', 'ufCrm18BayutSubCommunity', 'ufCrm18BayutTower', 'ufCrm18PfEnable', 'ufCrm18BayutEnable', 'ufCrm18DubizzleEnable', 'ufCrm18WebsiteEnable', 'ufCrm18ListingOwner', 'ufCrm18Status', 'ufCrm18RentalPeriod', 'createdTime', 'ufCrm18TitleDeed'
+            'id', 'ufCrm18ReferenceNumber', 'ufCrm18OfferingType', 'ufCrm18PropertyType', 'ufCrm18Price', 'ufCrm18TitleEn', 'ufCrm18DescriptionEn', 'ufCrm18Size', 'ufCrm18Bedroom', 'ufCrm18Bathroom', 'ufCrm18PhotoLinks', 'ufCrm18AgentName', 'ufCrm18City', 'ufCrm18Community', 'ufCrm18SubCommunity', 'ufCrm18Tower', 'ufCrm18BayutCity', 'ufCrm18BayutCommunity', 'ufCrm18BayutSubCommunity', 'ufCrm18BayutTower', 'ufCrm18PfEnable', 'ufCrm18BayutEnable', 'ufCrm18DubizzleEnable', 'ufCrm18WebsiteEnable', 'ufCrm18ListingOwner', 'ufCrm18ListingOwnerId', 'ufCrm18Status', 'ufCrm18RentalPeriod', 'createdTime', 'ufCrm18TitleDeed'
         ];
         const orderBy = {
             id: 'desc'
@@ -168,7 +169,7 @@
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <ul class="dropdown-menu shadow absolute z-10" style="max-height: 60vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #6B7280 #f9fafb; font-size:medium;">
-                                ${isAdmin ? `
+                                ${(isAdmin || property.ufCrm18ListingOwnerId == userId) ? `
                                 <li><a class="dropdown-item" href="?page=edit-property&id=${property.id}"><i class="fa-solid fa-edit me-2"></i>Edit</a></li>
                                 <li><button class="dropdown-item" onclick="handleAction('duplicate', ${property.id})"><i class="fa-solid fa-copy me-2"></i>Duplicate Listing</button></li>
                                 <li>

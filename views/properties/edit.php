@@ -94,6 +94,9 @@
 
         const agent = await getAgent(data.listing_agent);
 
+        const selectedOwner = data.listing_owner;
+        const [ownerId, ownerName] = selectedOwner.split('-', 2);
+
         const fields = {
             "ufCrm18TitleDeed": data.title_deed,
             "ufCrm18ReferenceNumber": data.reference,
@@ -151,8 +154,9 @@
             "ufCrm18ReraPermitIssueDate": data.rera_issue_date,
             "ufCrm18ReraPermitExpirationDate": data.rera_expiration_date,
             "ufCrm18DtcmPermitNumber": data.dtcm_permit_number,
-            "ufCrm18ListingOwner": data.listing_owner,
-            
+            "ufCrm18ListingOwner": ownerName,
+            "ufCrm18ListingOwnerId": ownerId,
+
             "ufCrm18LandlordName": data.landlord_name,
             "ufCrm18LandlordEmail": data.landlord_email,
             "ufCrm18LandlordContact": data.landlord_phone,

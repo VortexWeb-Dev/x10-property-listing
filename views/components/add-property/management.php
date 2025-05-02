@@ -101,22 +101,23 @@
                 const totalOwners = ownersData.total;
 
                 for (let i = 0; i < Math.ceil(totalOwners / 50); i++) {
-                    const ownersResponse = await fetch(`${baseUrl}/user.get?select[0]=NAME&select[1]=LAST_NAME&order[NAME]=asc&filter[ACTIVE]=true&start=${i * 50}`);
+                    const ownersResponse = await fetch(`${baseUrl}/user.get?select[0]=NAME&select[1]=LAST_NAME&select[2]=ID&order[NAME]=asc&filter[ACTIVE]=true&start=${i * 50}`);
                     const ownersData = await ownersResponse.json();
                     owners = owners.concat(ownersData.result.map(owner => {
                         return {
+                            VALUE: (owner.NAME || owner.LAST_NAME) ?
+                                `${owner.ID}-${owner.NAME || ''} ${owner.LAST_NAME || ''}`.trim() : `Unknown - (${owner.EMAIL || 'No Email'})`,
                             NAME: (owner.NAME || owner.LAST_NAME) ?
-                                `${owner.NAME || ''} ${owner.LAST_NAME || ''}`.trim() :
-                                `Unknown - (${owner.EMAIL || 'No Email'})`
+                                `${owner.NAME || ''} ${owner.LAST_NAME || ''}`.trim() : `Unknown - (${owner.EMAIL || 'No Email'})`
                         };
                     }));
                 }
 
-                agents.forEach(agent => {
-                    owners.push({
-                        NAME: agent.ufCrm20AgentName
-                    })
-                })
+                // agents.forEach(agent => {
+                //     owners.push({
+                //         NAME: agent.ufCrm20AgentName
+                //     })
+                // })
 
                 owners = owners.filter((owner, index, self) => {
                     return self.findIndex((o) => o.NAME === owner.NAME) === index && owner.NAME !== '';
@@ -126,7 +127,7 @@
 
                 owners.forEach(owner => {
                     const option = document.createElement('option');
-                    option.value = owner.NAME;
+                    option.value = owner.VALUE;
                     option.textContent = owner.NAME;
                     listingOwnerSelect.appendChild(option);
                 });
