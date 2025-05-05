@@ -25,7 +25,7 @@
             data-status-value="LIVE" id="live-option">
             <input type="radio" name="status" value="LIVE" id="live" class="peer">
             <label for="live" class="text-md text-gray-500 peer-checked:text-blue-600 peer-checked:border-transparent transition-all w-full flex items-center justify-between">
-                Live
+                Send for Approval
             </label>
         </div>
 
