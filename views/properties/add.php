@@ -94,7 +94,9 @@
         const agent = await getAgent(data.listing_agent);
 
         const selectedOwner = data.listing_owner;
-        const [ownerId, ownerName] = selectedOwner.split('-', 2);
+        const [ownerIdRaw, ownerNameRaw] = selectedOwner.split('-', 2);
+        const ownerId = ownerIdRaw.trim();
+        const ownerName = ownerNameRaw.trim();
 
         const fields = {
             "ufCrm18TitleDeed": data.title_deed,

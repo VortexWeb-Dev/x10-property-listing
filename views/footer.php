@@ -1445,7 +1445,7 @@
             }
 
             ensureOptionExistsAndSelect('listing_agent', property.ufCrm18AgentId, property.ufCrm18AgentName);
-            ensureOptionExistsAndSelect('listing_owner', property.ufCrm18ListingOwner, property.ufCrm18ListingOwner);
+            ensureOptionExistsAndSelect('listing_owner', property.ufCrm18ListingOwnerId + "-" + property.ufCrm18ListingOwner, property.ufCrm18ListingOwner);
             ensureOptionExistsAndSelect('developer', property.ufCrm18Developers, property.ufCrm18Developers);
 
             // Notes
