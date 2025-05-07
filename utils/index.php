@@ -296,7 +296,7 @@ function formatDate($date)
     return $date ? date('Y-m-d H:i:s', strtotime($date)) : date('Y-m-d H:i:s');
 }
 
-function formatField($field, $value, $type = 'string')
+function formatField($field, $value, $type = 'string', $cdata = false)
 {
     if (empty($value) && $value != 0) {
         return '';
@@ -306,7 +306,11 @@ function formatField($field, $value, $type = 'string')
         case 'date':
             return '<' . $field . '>' . formatDate($value) . '</' . $field . '>';
         default:
-            return '<' . $field . '>' . htmlspecialchars($value) . '</' . $field . '>';
+            if ($type === 'string' && $cdata) {
+                return '<' . $field . '><![CDATA[' . $value . ']]></' . $field . '>';
+            } else {
+                return '<' . $field . '>' . htmlspecialchars($value) . '</' . $field . '>';
+            }
     }
 }
 
@@ -544,10 +548,10 @@ function generatePfXml($properties)
         $xml .= formatField('sub_community', $property['ufCrm18SubCommunity']);
         $xml .= formatField('property_name', $property['ufCrm18Tower']);
 
-        $xml .= formatField('title_en', $property['ufCrm18TitleEn']);
-        $xml .= formatField('title_ar', $property['ufCrm18TitleAr']);
-        $xml .= formatField('description_en', $property['ufCrm18DescriptionEn']);
-        $xml .= formatField('description_ar', $property['ufCrm18DescriptionAr']);
+        $xml .= formatField('title_en', $property['ufCrm18TitleEn'], 'string', true);
+        $xml .= formatField('title_ar', $property['ufCrm18TitleAr'], 'string', true);
+        $xml .= formatField('description_en', $property['ufCrm18DescriptionEn'], 'string', true);
+        $xml .= formatField('description_ar', $property['ufCrm18DescriptionAr'], 'string', true);
 
         $xml .= formatField('plot_size', $property['ufCrm18TotalPlotSize']);
         $xml .= formatField('size', $property['ufCrm18Size']);
