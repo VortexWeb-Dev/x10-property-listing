@@ -386,15 +386,23 @@ function formatFurnished($property)
 function formatAgent($property)
 {
     $xml = '<agent>';
-    $xml .= formatField('id', $property['ufCrm18AgentId']);
-    $xml .= formatField('name', $property['ufCrm18AgentName']);
-    $xml .= formatField('email', $property['ufCrm18AgentEmail']);
-    $xml .= formatField('phone', $property['ufCrm18AgentPhone']);
+
+    $xml .= formatField('id', $property['ufCrm18AgentId'] ?? '');
+    $xml .= formatField('name', $property['ufCrm18AgentName'] ?? '');
+    $xml .= formatField('email', $property['ufCrm18AgentEmail'] ?? '');
+
+    $phone = $property['ufCrm18AgentPhone'] ?? '';
+    if ($phone !== '' && strpos($phone, '+') !== 0) {
+        $phone = '+' . $phone;
+    }
+    $xml .= formatField('phone', $phone);
     $xml .= formatField('photo', $property['ufCrm18AgentPhoto'] ?? 'https://youtupia.com/thinkrealty/images/agent-placeholder.webp');
+
     $xml .= '</agent>';
 
     return $xml;
 }
+
 
 function formatPhotos($photos, $watermark = true)
 {
