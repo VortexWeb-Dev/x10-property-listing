@@ -87,15 +87,15 @@ if (!array_key_exists($page, $pages)) {
         const currentUserId = <?php echo json_encode($currentUserId); ?>; // This will be filled by PHP
 
         // Get stored values
-        const storedExpiry = localStorage.getItem(expiryKey);
-        const storedUserId = localStorage.getItem(userIdKey);
+        const storedExpiry = sessionStorage.getItem(expiryKey);
+        const storedUserId = sessionStorage.getItem(userIdKey);
 
         // Check if admin status has expired or if the user ID has changed
         if (!storedExpiry || now > parseInt(storedExpiry, 30) || storedUserId !== currentUserId && currentUserId) {
             // Update all values
-            localStorage.setItem(isAdminKey, currentIsAdmin);
-            localStorage.setItem(userIdKey, currentUserId);
-            localStorage.setItem(expiryKey, now + expiryTime);
+            sessionStorage.setItem(isAdminKey, currentIsAdmin);
+            sessionStorage.setItem(userIdKey, currentUserId);
+            sessionStorage.setItem(expiryKey, now + expiryTime);
 
             console.log('User session data updated:', {
                 userId: currentUserId,

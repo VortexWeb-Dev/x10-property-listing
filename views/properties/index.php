@@ -57,8 +57,8 @@
     const pageSize = 50;
     let totalPages = 0;
 
-    const isAdmin = localStorage.getItem('isAdmin') == 'true';
-    const userId = localStorage.getItem('userId');
+    const isAdmin = sessionStorage.getItem('isAdmin') == 'true';
+    const userId = sessionStorage.getItem('userId');
 
     async function getPlXmlId(userId) {
         try {
@@ -178,7 +178,7 @@
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
-                                                                
+
                                 <li><a class="dropdown-item" target="_blank" href="download-pdf.php?type=logged&id=${property.id}"><i class="fa-solid fa-print me-2"></i>Download PDF as Logged-In Agent</a></li>
                                 <li><a class="dropdown-item" target="_blank" href="download-pdf.php?type=agent&id=${property.id}"><i class="fa-solid fa-print me-2"></i>Download PDF as Listing Agent</a></li>
                                 <li><a class="dropdown-item" target="_blank" href="download-pdf.php?type=owner&id=${property.id}"><i class="fa-solid fa-print me-2"></i>Download PDF as Listing Owner</a></li>
