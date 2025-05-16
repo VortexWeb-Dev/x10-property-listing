@@ -197,7 +197,7 @@
         const amenitiesString = data.amenities;
         if (amenitiesString) {
             const amenitiesArray = JSON.parse(amenitiesString);
-            fields["ufCrm18Amenities"] = amenitiesArray;
+            fields["ufCrm18PrivateAmenities"] = amenitiesArray;
         }
 
         const photos = document.getElementById('selectedImages').value;

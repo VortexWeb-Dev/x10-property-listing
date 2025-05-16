@@ -193,7 +193,7 @@
         if (amenitiesString) {
             const amenitiesArray = JSON.parse(amenitiesString);
             if (amenitiesArray) {
-                fields["ufCrm18Amenities"] = amenitiesArray;
+                fields["ufCrm18PrivateAmenities"] = amenitiesArray;
             }
         }
 

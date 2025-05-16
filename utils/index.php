@@ -464,67 +464,11 @@ function formatCompletionStatus($property)
 
 function formatAmenities($property)
 {
-    $private_amenities_ids = [
-        'AC',
-        'BA',
-        'BK',
-        'BL',
-        'BW',
-        'CP',
-        'CS',
-        'LB',
-        'MR',
-        'MS',
-        'PA',
-        'PG',
-        'PJ',
-        'PP',
-        'PY',
-        'VC',
-        'SE',
-        'SP',
-        'SS',
-        'ST',
-        'SY',
-        'VW',
-        'WC',
-        'CO',
-        'PR',
-        'BR'
-    ];
+    $privateAmenities = $property['ufCrm18PrivateAmenities'] ?? [];
+    $commercialAmenities = $property['ufCrm18CommercialAmenities'] ?? [];
 
-    $commercial_amenities_ids = [
-        'CR',
-        'AN',
-        'DN',
-        'LB',
-        'SP',
-        'SY',
-        'CP',
-        'VC',
-        'PN',
-        'MZ'
-    ];
-
-    $amenities = $property['ufCrm18Amenities'] ?? [];
-
-    $private_xml = '<private_amenities>';
-    $commercial_xml = '<commercial_amenities>';
-
-    foreach ($amenities as $amenity) {
-        if (strlen($amenity) > 2) continue;
-
-        if (in_array($amenity, $private_amenities_ids)) {
-            $private_xml .= $amenity . ', ';
-        }
-
-        if (in_array($amenity, $commercial_amenities_ids)) {
-            $commercial_xml .= $amenity . ', ';
-        }
-    }
-
-    $private_xml = rtrim($private_xml, ', ') . '</private_amenities>';
-    $commercial_xml = rtrim($commercial_xml, ', ') . '</commercial_amenities>';
+    $private_xml = '<private_amenities>' . implode(', ', $privateAmenities) . '</private_amenities>';
+    $commercial_xml = '<commercial_amenities>' . implode(', ', $commercialAmenities) . '</commercial_amenities>';
 
     return $private_xml . $commercial_xml;
 }
@@ -819,9 +763,9 @@ function generateBayutXml($properties)
         }
         $xml .= '</Images>';
 
-        if (!empty($property['ufCrm18Amenities']) && is_array($property['ufCrm18Amenities'])) {
+        if (!empty($property['ufCrm18PrivateAmenities']) && is_array($property['ufCrm18PrivateAmenities'])) {
             $xml .= '<Features>';
-            foreach ($property['ufCrm18Amenities'] as $amenity) {
+            foreach ($property['ufCrm18PrivateAmenities'] as $amenity) {
                 $fullName = getFullAmenityName(trim($amenity));
                 $xml .= '<Feature><![CDATA[' . $fullName . ']]></Feature>';
             }

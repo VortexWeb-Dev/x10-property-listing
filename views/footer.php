@@ -1489,8 +1489,8 @@
                 updateAmenitiesInput();
             }
 
-            if (property.ufCrm18Amenities && property.ufCrm18Amenities.length > 0) {
-                property.ufCrm18Amenities.forEach(amenity => {
+            if (property.ufCrm18PrivateAmenities && property.ufCrm18PrivateAmenities.length > 0) {
+                property.ufCrm18PrivateAmenities.forEach(amenity => {
                     addExistingAmenity(amenity);
                 });
             }

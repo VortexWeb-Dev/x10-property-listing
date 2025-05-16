@@ -61,7 +61,8 @@ $fields = [
     'ufCrm18WebsiteEnable',
     'updatedTime',
     'ufCrm18TitleDeed',
-    'ufCrm18Amenities'
+    'ufCrm18PrivateAmenities',
+    'ufCrm18CommercialAmenities'
 ];
 
 $properties = fetchAllProperties($baseUrl, $entityTypeId, $fields, 'dubizzle');
