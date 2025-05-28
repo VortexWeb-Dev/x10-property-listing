@@ -759,7 +759,6 @@ function generateBayutXml($properties)
 
         $xml .= '<Images>';
         foreach ($property['ufCrm18PhotoLinks'] ?? [] as $image) {
-            $image = str_replace('markAlpha=0.5', 'markAlpha=0', $image);
             $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[' . $image . ']]></Image>';
         }
         $xml .= '</Images>';
