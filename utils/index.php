@@ -401,18 +401,28 @@ function formatAgent($property)
 }
 
 
-function formatPhotos($photos, $watermark = true)
+function formatPhotos($photos, $reference)
 {
+    global $withoutWatermark;
+
     if (empty($photos)) {
         return '';
     }
 
+    $applyWatermark = in_array($reference, $withoutWatermark);
     $xml = '<photo>';
-    foreach ($photos as $photo) {
-        $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="' . ($watermark ? 'Yes' : 'No') . '">' . htmlspecialchars($photo) . '</url>';
-    }
-    $xml .= '</photo>';
 
+    foreach ($photos as $photo) {
+        $finalUrl = $applyWatermark
+            ? "https://connecteo.in/x10-property-listing/assets.php?imageUrl=" . urlencode($photo) . "&watermark=1"
+            : $photo;
+
+        $xml .= '<url last_update="' . date('Y-m-d H:i:s') . '" watermark="' . ($applyWatermark ? 'Yes' : 'No') . '">';
+        $xml .= '<![CDATA[' . $finalUrl . ']]>';
+        $xml .= '</url>';
+    }
+
+    $xml .= '</photo>';
     return $xml;
 }
 
@@ -515,7 +525,7 @@ function generatePfXml($properties)
         $xml .= formatField('view360', $property['ufCrm_18_360_VIEW_URL']);
 
         $watermark = ($property['ufCrm18Watermark'] === 'Y' || $property['ufCrm18Watermark'] === null) ? 'Y' : 'N';
-        $xml .= formatPhotos($property['ufCrm18PhotoLinks'], $watermark === 'Y');
+        $xml .= formatPhotos($property['ufCrm18PhotoLinks'], $property['ufCrm18ReferenceNumber']);
 
         $xml .= formatField('floor_plan', $property['ufCrm18FloorPlan']);
         $xml .= formatGeopoints($property);
@@ -677,6 +687,8 @@ function generateAgentsXml($agents)
 
 function generateBayutXml($properties)
 {
+    global $withoutWatermark;
+
     $xml = '<?xml version="1.0" encoding="UTF-8"?>';
     $xml .= '<Properties last_update="' . date('Y-m-d H:i:s') . '" listing_count="' . count($properties) . '">';
 
@@ -758,9 +770,18 @@ function generateBayutXml($properties)
         $xml .= '<Listing_Agent_Email><![CDATA[' . ($property['ufCrm18AgentEmail'] ?? '') . ']]></Listing_Agent_Email>';
 
         $xml .= '<Images>';
+
+        $reference = $property['ufCrm18ReferenceNumber'] ?? '';
+        $applyWatermark = in_array($reference, $withoutWatermark);
+
         foreach ($property['ufCrm18PhotoLinks'] ?? [] as $image) {
-            $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[' . $image . ']]></Image>';
+            $finalImageUrl = $applyWatermark
+                ? "https://connecteo.in/x10-property-listing/assets.php?imageUrl=" . urlencode($image) . "&watermark=1"
+                : $image;
+
+            $xml .= '<Image last_update="' . date('Y-m-d H:i:s') . '"><![CDATA[' . $finalImageUrl . ']]></Image>';
         }
+
         $xml .= '</Images>';
 
         if (!empty($property['ufCrm18PrivateAmenities']) && is_array($property['ufCrm18PrivateAmenities'])) {
@@ -831,6 +852,114 @@ function isAdmin($userId)
     return in_array($userId, $admins);
     // return true;
 }
+
+$withoutWatermark = [
+    "Xten-MY-ZANE-1061",
+    "Xten-MY-ZANE-1062",
+    "Xten-MY-ZANE-1063",
+    "Xten-MY-ZANE-1064",
+    "Xten-MY-ZANE-1065",
+    "Xten-MY-ZANE-1066",
+    "Xten-MY-ZANE-1067",
+    "Xten-Saud-3007",
+    "Xten-Saud-3006",
+    "Xten-Saud-3005",
+    "Xten-Saud-3004",
+    "Xten-Saud-3003",
+    "Xten-Saud-3002",
+    "XTEN-MO-0062",
+    "XTEN-MO-0061",
+    "XTEN-MO-0060",
+    "XTEN-MO-0059",
+    "XTEN-MO-0058",
+    "XTEN-MO-0057",
+    "XTEN-MO-0056",
+    "XTEN-MO-0055",
+    "XTEN-MO-0054",
+    "XTEN-MO-0053",
+    "Xten-MGE-2025017",
+    "Xten-MGE-2025016",
+    "Xten-MGE-2025015",
+    "Xten-Saud-3001",
+    "XTEN-MO-0047",
+    "XTEN-MO-0046",
+    "XTEN-MO-0045",
+    "XTEN-MO-0044",
+    "Xten-IM-0023",
+    "Xten-MY-WAL-1030",
+    "Xten-MY-WAL-1029",
+    "Xten-IM-0022",
+    "Xten-IM-0021",
+    "Xten-MO-0044",
+    "Xten-MO-0043",
+    "Xten-MO-0042",
+    "Xten-MO-0041",
+    "Xten-MO-0040",
+    "Xten-MO-0039",
+    "Xten-MO-0038",
+    "Xten-MO-0037",
+    "Xten-MO-0036",
+    "Xten-MO-0035",
+    "Xten-MO-0034",
+    "Xten-MO-0033",
+    "Xten-MO-0032",
+    "Xten-MO-0031",
+    "Xten-MO-0030",
+    "Xten-MO-0029",
+    "Xten-MO-0028",
+    "Xten-MO-0027",
+    "Xten-MO-0026",
+    "Xten-MO-0020",
+    "XTEN-MO-0052",
+    "Xten-MY-WAL-1028",
+    "Xten-MY-WAL-1027",
+    "Xten-MY-WAL-1026",
+    "Xten-MY-WAL-1025",
+    "Xten-MY-WAL-1024",
+    "Xten-MY-WAL-1019",
+    "Xten-IM-0020",
+    "Xten-IM-0019",
+    "Xten-IM-0018",
+    "Xten-IM-0017",
+    "Xten-IM-0016",
+    "Xten-IM-0015",
+    "Xten-IM-0014",
+    "Xten-IM-0013",
+    "Xten-MO-0016",
+    "Xten-MO-0017",
+    "Xten-MO-0014",
+    "Xten-MY-1018",
+    "Xten-MGE-2025014",
+    "Xten-RM-0001",
+    "Xten-MY-1022-R",
+    "Xten-MGE-2025013",
+    "Xten-MGE-2025012",
+    "Xten-MGE-2025011",
+    "Xten-GG-0025",
+    "Xten-GG-0024",
+    "Xten-GG-0023",
+    "Xten-GG-0022",
+    "Xten-GG-0021",
+    "Xten-GG-0020",
+    "Xten-MY-1021",
+    "Xten-MY-1016",
+    "Xten-IM-0020",
+    "Xten-IM-0002",
+    "Xten-SY-00010",
+    "Xten-GGPF-0019",
+    "Xten-GG-0019",
+    "Xten-GGPF- 0014",
+    "Xten-GGPF- 0010",
+    "vault-12307738",
+    "Xten-MO-0011",
+    "Xten-Ish-0002",
+    "Xten-GG- 0011",
+    "Xten-MGE-2025008",
+    "XTEN-MO-0009",
+    "Xten-AB-0004",
+    "Xten-MGE-2025007"
+];
+
 
 
 function generateWebsiteJson($properties)
