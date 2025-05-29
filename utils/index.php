@@ -957,7 +957,13 @@ $withoutWatermark = [
     "Xten-MGE-2025008",
     "XTEN-MO-0009",
     "Xten-AB-0004",
-    "Xten-MGE-2025007"
+    "Xten-MGE-2025007",
+    "Xten-MY-WAL-1023",
+    "Xten-MGE-2025003",
+    "Xten-IM-0013",
+    "XTEN-MO-0039",
+    "XTEN-MO-0040",
+    "XTEN-MO-0036",
 ];
 
 
