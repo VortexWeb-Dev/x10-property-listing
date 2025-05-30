@@ -143,42 +143,7 @@
                     const data = await response.json();
                     const property = data.result.item;
 
-                    async function generateReferenceNumber() {
-                        let prefix = "";
-                        try {
-                            const selectedStatus = property.ufCrm18Status || "";
-                            const offeringType = property.ufCrm18OfferingType || "";
-
-                            if (selectedStatus === "POCKET") {
-                                prefix = "SP-P-";
-                            } else {
-                                if (["CS", "RS"].includes(offeringType)) {
-                                    prefix = "SP-S-";
-                                } else if (["CR", "RR"].includes(offeringType)) {
-                                    prefix = "SP-R-";
-                                } else {
-                                    prefix = "SP-";
-                                }
-                            }
-
-                            const apiUrl = `https://crm.springfieldproperties.ae/rest/8/o17ko7gsmh4aam3t/crm.item.list?entityTypeId=1230&filter[%ufCrm18ReferenceNumber]=${prefix}&order[ufCrm18ReferenceNumber]=desc&select[]=ufCrm18ReferenceNumber`;
-                            const response = await fetch(apiUrl);
-                            if (!response.ok) throw new Error(`API responded with status ${response.status}`);
-
-                            const data = await response.json();
-                            const lastRefNum = data.result.items[0]?.ufCrm18ReferenceNumber || `${prefix}0000`;
-                            const numericPart = parseInt(lastRefNum.match(/\d+$/)?.[0] || "0", 10);
-                            const newNumericPart = (numericPart + 1).toString().padStart(4, "0");
-
-                            return prefix + newNumericPart;
-                        } catch (error) {
-                            console.error("Error generating reference number:", error);
-                            const timestamp = Date.now().toString();
-                            return prefix + timestamp.slice(-8);
-                        }
-                    }
-
-                    const newRefNumber = await generateReferenceNumber();
+                    const newRefNumber = `${property.ufCrm18ReferenceNumber}-duplicate`
 
                     const fields = {};
 
